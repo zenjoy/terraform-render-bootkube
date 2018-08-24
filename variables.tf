@@ -24,6 +24,12 @@ variable "cloud_provider" {
   default     = ""
 }
 
+variable "cloud_config" {
+  description = "Path to the configuration for the cloud provider"
+  type = "string"
+  default = ""
+}
+
 variable "networking" {
   description = "Choice of networking provider (flannel or calico)"
   type        = "string"
