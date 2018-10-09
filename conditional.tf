@@ -27,3 +27,22 @@ resource "template_dir" "calico-manifests" {
     pod_cidr                        = "${var.pod_cidr}"
   }
 }
+
+resource "template_dir" "weave-manifests" {
+  count           = "${var.networking == "weave" ? 1 : 0}"
+  source_dir      = "${path.module}/resources/weave"
+  destination_dir = "${var.asset_dir}/manifests-networking"
+
+  vars {
+    weave_kube_image = "${var.container_images["weave_kube"]}"
+    weave_npc_image  = "${var.container_images["weave_npc"]}"
+
+    pod_cidr  = "${var.pod_cidr}"
+    weave_passwd = "${random_string.weave_passwd.result}"
+  }
+}
+
+resource "random_string" "weave_passwd" {
+  count  = "${var.networking == "weave" ? 1 : 0}"
+  length = 32
+}
