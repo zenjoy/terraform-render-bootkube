@@ -8,8 +8,8 @@ resource "template_dir" "bootstrap-manifests" {
     etcd_servers    = "${join(",", formatlist("https://%s:2379", var.etcd_servers))}"
 
     cloud_provider = "${var.cloud_provider}"
-    cloud_config_dir = "${dirname(var.cloud_config)}"
-    cloud_config_file = "${basename(var.cloud_config)}"
+    cloud_config_dir  = "${var.cloud_config == "" ? "" : dirname(var.cloud_config)}"
+    cloud_config_file = "${var.cloud_config == "" ? "" : basename(var.cloud_config)}"
     pod_cidr       = "${var.pod_cidr}"
     service_cidr   = "${var.service_cidr}"
 
@@ -31,8 +31,8 @@ resource "template_dir" "manifests" {
     etcd_servers = "${join(",", formatlist("https://%s:2379", var.etcd_servers))}"
 
     cloud_provider         = "${var.cloud_provider}"
-    cloud_config_dir       = "${dirname(var.cloud_config)}"
-    cloud_config_file      = "${basename(var.cloud_config)}"
+    cloud_config_dir       = "${var.cloud_config == "" ? "" : dirname(var.cloud_config)}"
+    cloud_config_file      = "${var.cloud_config == "" ? "" : basename(var.cloud_config)}"
     pod_cidr               = "${var.pod_cidr}"
     service_cidr           = "${var.service_cidr}"
     cluster_domain_suffix  = "${var.cluster_domain_suffix}"

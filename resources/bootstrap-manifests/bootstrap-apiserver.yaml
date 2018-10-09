@@ -27,7 +27,7 @@ spec:
     - --service-account-key-file=/etc/kubernetes/secrets/service-account.pub
     - --service-cluster-ip-range=${service_cidr}
     - --cloud-provider=${cloud_provider}
-    - --cloud-config=${cloud_config_dir}/${cloud_config_file}
+    - ${cloud_config_dir == "" ? "" : "--cloud-config=${cloud_config_dir}/${cloud_config_file}"}
     - --storage-backend=etcd3
     - --tls-cert-file=/etc/kubernetes/secrets/apiserver.crt
     - --tls-private-key-file=/etc/kubernetes/secrets/apiserver.key
@@ -43,9 +43,9 @@ spec:
     - mountPath: /etc/kubernetes/secrets
       name: secrets
       readOnly: true
-    - mountPath: ${cloud_config_dir}
+    ${cloud_config_dir == "" ? "" : "- mountPath: ${cloud_config_dir}
       name: cloud-config
-      readOnly: true
+      readOnly: true"}
   hostNetwork: true
   volumes:
   - name: secrets
@@ -54,6 +54,6 @@ spec:
   - name: ssl-certs-host
     hostPath:
       path: ${trusted_certs_dir}
-  - name: cloud-config
+  ${cloud_config_dir == "" ? "" : "- name: cloud-config
     hostPath:
-      path: ${cloud_config_dir}
+      path: ${cloud_config_dir}"}
