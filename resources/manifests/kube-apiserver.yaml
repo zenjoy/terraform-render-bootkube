@@ -33,7 +33,7 @@ spec:
         - --bind-address=0.0.0.0
         - --client-ca-file=/etc/kubernetes/secrets/ca.crt
         - --cloud-provider=${cloud_provider}
-        - --cloud-config=${cloud_config_dir}/${cloud_config_file}
+        - ${cloud_config_dir == "" ? "" : "--cloud-config=${cloud_config_dir}/${cloud_config_file}"}
         - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultTolerationSeconds,DefaultStorageClass,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,Priority
         - --etcd-cafile=/etc/kubernetes/secrets/etcd-client-ca.crt
         - --etcd-certfile=/etc/kubernetes/secrets/etcd-client.crt
@@ -62,9 +62,9 @@ spec:
         - mountPath: /etc/kubernetes/secrets
           name: secrets
           readOnly: true
-        - mountPath: ${cloud_config_dir}
+        ${cloud_config_dir == "" ? "" : "- mountPath: ${cloud_config_dir}
           name: cloud-config
-          readOnly: true
+          readOnly: true"}
       hostNetwork: true
       nodeSelector:
         node-role.kubernetes.io/master: ""
@@ -79,9 +79,9 @@ spec:
       - name: secrets
         secret:
           secretName: kube-apiserver
-      - name: cloud-config
+      ${cloud_config_dir == "" ? "" : "- name: cloud-config
         hostPath:
-          path: ${cloud_config_dir}
+          path: ${cloud_config_dir}"}
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
