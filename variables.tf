@@ -112,13 +112,13 @@ variable "ca_private_key" {
 }
 
 variable "cacert_validity_hours" {
-  type = "number"
-  default = 87600
+  type = "string"
+  default = "87600"
 }
 
 variable "cert_validity_hours" {
-  type = "number"
-  default = 43800
+  type = "string"
+  default = "43800"
 }
 
 # unofficial, temporary, may be removed without notice
