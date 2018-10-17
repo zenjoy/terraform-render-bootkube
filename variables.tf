@@ -121,6 +121,11 @@ variable "cert_validity_hours" {
   default = "43800"
 }
 
+variable "api_server_altname" {
+  type = "string"
+  default = ""
+}
+
 # unofficial, temporary, may be removed without notice
 
 variable "apiserver_port" {
