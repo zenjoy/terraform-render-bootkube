@@ -109,6 +109,22 @@ variable "ca_private_key" {
   default     = ""
 }
 
+
+variable "cacert_validity_hours" {
+  type = "string"
+  default = "87600"
+}
+
+variable "cert_validity_hours" {
+  type = "string"
+  default = "43800"
+}
+
+variable "api_server_altname" {
+  type = "string"
+  default = ""
+}
+
 # unofficial, temporary, may be removed without notice
 
 variable "apiserver_port" {
