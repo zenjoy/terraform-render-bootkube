@@ -7,7 +7,7 @@ metadata:
     tier: control-plane
     k8s-app: kube-controller-manager
 spec:
-  replicas: 2
+  replicas: ${control_plane_replicas}
   selector:
     matchLabels:
       tier: control-plane
@@ -17,6 +17,8 @@ spec:
       labels:
         tier: control-plane
         k8s-app: kube-controller-manager
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       affinity:
         podAntiAffinity:
@@ -58,6 +60,8 @@ spec:
           initialDelaySeconds: 15
           timeoutSeconds: 15
         volumeMounts:
+        - name: var-run-kubernetes
+          mountPath: /var/run/kubernetes
         - name: secrets
           mountPath: /etc/kubernetes/secrets
           readOnly: true
@@ -81,6 +85,8 @@ spec:
         operator: Exists
         effect: NoSchedule
       volumes:
+      - name: var-run-kubernetes
+        emptyDir: {}
       - name: secrets
         secret:
           secretName: kube-controller-manager
