@@ -71,9 +71,6 @@ spec:
         - name: ssl-host
           mountPath: /etc/ssl/certs
           readOnly: true
-        - name: certs
-          mountPath: /var/run/kubernetes
-          readOnly: false
         ${cloud_config_dir == "" ? "" : "- mountPath: ${cloud_config_dir}
           name: cloud-config
           readOnly: true"}
