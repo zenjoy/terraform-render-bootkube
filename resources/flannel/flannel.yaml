@@ -23,7 +23,7 @@ spec:
       containers:
       - name: kube-flannel
         image: ${flannel_image}
-        command: [ "/opt/bin/flanneld", "--ip-masq", "--kube-subnet-mgr", "--iface=$(POD_IP)"]
+        command: [ "/opt/bin/flanneld", "--ip-masq", "--kube-subnet-mgr", "--iface=eth0"]
         securityContext:
           privileged: true
         env:
