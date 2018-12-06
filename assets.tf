@@ -1,6 +1,6 @@
 # Self-hosted Kubernetes bootstrap-manifests
 resource "template_dir" "bootstrap-manifests" {
-  source_dir      = "${path.module}/resources/bootstrap-manifests"
+  source_dir      = "bootkube/resources/bootstrap-manifests"
   destination_dir = "${var.asset_dir}/bootstrap-manifests"
 
   vars {
@@ -20,7 +20,7 @@ resource "template_dir" "bootstrap-manifests" {
 
 # Self-hosted Kubernetes manifests
 resource "template_dir" "manifests" {
-  source_dir      = "${path.module}/resources/manifests"
+  source_dir      = "bootkube/resources/manifests"
   destination_dir = "${var.asset_dir}/manifests"
 
   vars {
@@ -66,7 +66,7 @@ resource "local_file" "user-kubeconfig" {
 }
 
 data "template_file" "kubeconfig" {
-  template = "${file("${path.module}/resources/kubeconfig")}"
+  template = "${file("bootkube/resources/kubeconfig")}"
 
   vars {
     ca_cert      = "${base64encode(var.ca_certificate == "" ? join(" ", tls_self_signed_cert.kube-ca.*.cert_pem) : var.ca_certificate)}"
@@ -77,7 +77,7 @@ data "template_file" "kubeconfig" {
 }
 
 data "template_file" "user-kubeconfig" {
-  template = "${file("${path.module}/resources/user-kubeconfig")}"
+  template = "${file("bootkube/resources/user-kubeconfig")}"
 
   vars {
     name         = "${var.cluster_name}"

@@ -2,7 +2,7 @@
 
 resource "template_dir" "flannel-manifests" {
   count           = "${var.networking == "flannel" ? 1 : 0}"
-  source_dir      = "${path.module}/resources/flannel"
+  source_dir      = "bootkube/resources/flannel"
   destination_dir = "${var.asset_dir}/manifests-networking"
 
   vars {
@@ -15,7 +15,7 @@ resource "template_dir" "flannel-manifests" {
 
 resource "template_dir" "calico-manifests" {
   count           = "${var.networking == "calico" ? 1 : 0}"
-  source_dir      = "${path.module}/resources/calico"
+  source_dir      = "bootkube/resources/calico"
   destination_dir = "${var.asset_dir}/manifests-networking"
 
   vars {
@@ -30,7 +30,7 @@ resource "template_dir" "calico-manifests" {
 
 resource "template_dir" "weave-manifests" {
   count           = "${var.networking == "weave" ? 1 : 0}"
-  source_dir      = "${path.module}/resources/weave"
+  source_dir      = "bootkube/resources/weave"
   destination_dir = "${var.asset_dir}/manifests-networking"
 
   vars {
