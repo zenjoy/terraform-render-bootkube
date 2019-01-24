@@ -57,7 +57,9 @@ spec:
             - name: xtables-lock
               mountPath: /run/xtables.lock
         - name: weave-npc
-          args: []
+          args:
+          - "--log-level"
+          - "error"
           env:
             - name: HOSTNAME
               valueFrom:
