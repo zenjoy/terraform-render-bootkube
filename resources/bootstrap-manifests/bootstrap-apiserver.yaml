@@ -10,7 +10,7 @@ spec:
     command:
     - /hyperkube
     - apiserver
-    - ${cloud_provider == "external" ? "" : "--advertise-address=$(POD_IP)"}
+    - %{ if cloud_provider != "external" }--advertise-address=$(POD_IP)%{ endif }
     - --allow-privileged=true
     - --authorization-mode=RBAC
     - --bind-address=0.0.0.0
@@ -27,7 +27,7 @@ spec:
     - --service-account-key-file=/etc/kubernetes/secrets/service-account.pub
     - --service-cluster-ip-range=${service_cidr}
     - --cloud-provider=${cloud_provider}
-    - ${cloud_config_dir == "" ? "" : "--cloud-config=${cloud_config_dir}/${cloud_config_file}"}
+    - %{ if cloud_config_dir != "" }--cloud-config=${cloud_config_dir}/${cloud_config_file}%{ endif }
     - --storage-backend=etcd3
     - --tls-cert-file=/etc/kubernetes/secrets/apiserver.crt
     - --tls-private-key-file=/etc/kubernetes/secrets/apiserver.key
@@ -43,9 +43,9 @@ spec:
     - mountPath: /etc/kubernetes/secrets
       name: secrets
       readOnly: true
-    ${cloud_config_dir == "" ? "" : "- mountPath: ${cloud_config_dir}
+    %{if cloud_config_dir != "" }- mountPath: ${cloud_config_dir}
       name: cloud-config
-      readOnly: true"}
+      readOnly: true%{ endif }
   hostNetwork: true
   volumes:
   - name: secrets
@@ -54,6 +54,6 @@ spec:
   - name: ssl-certs-host
     hostPath:
       path: ${trusted_certs_dir}
-  ${cloud_config_dir == "" ? "" : "- name: cloud-config
+  %{ if cloud_config_dir != "" }- name: cloud-config
     hostPath:
-      path: ${cloud_config_dir}"}
+      path: ${cloud_config_dir}%{ endif }
