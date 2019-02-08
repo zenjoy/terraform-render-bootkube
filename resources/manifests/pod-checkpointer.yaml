@@ -19,9 +19,17 @@ spec:
       annotations:
         checkpointer.alpha.coreos.com/checkpoint: "true"
     spec:
+      priorityClassName: system-node-critical
       containers:
       - name: pod-checkpointer
         image: ${pod_checkpointer_image}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
         command:
         - /checkpoint
         - --lock-file=/var/run/lock/pod-checkpointer.lock

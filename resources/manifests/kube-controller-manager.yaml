@@ -18,6 +18,7 @@ spec:
         tier: control-plane
         k8s-app: kube-controller-manager
     spec:
+      priorityClassName: system-cluster-critical
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -37,6 +38,13 @@ spec:
       containers:
       - name: kube-controller-manager
         image: ${hyperkube_image}
+        resources:
+          requests:
+            cpu: 200m
+            memory: 250Mi
+          limits:
+            cpu: 200m
+            memory: 250Mi
         command:
         - ./hyperkube
         - controller-manager

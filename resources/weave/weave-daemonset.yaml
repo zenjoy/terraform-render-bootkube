@@ -12,6 +12,7 @@ spec:
       labels:
         name: weave-net
     spec:
+      priorityClassName: system-node-critical
       containers:
         - name: weave
           command:
@@ -38,7 +39,11 @@ spec:
             initialDelaySeconds: 30
           resources:
             requests:
-              cpu: 10m
+              cpu: 100m
+              memory: 150Mi
+            limits:
+              cpu: 100m
+              memory: 150Mi
           securityContext:
             privileged: true
           volumeMounts:
@@ -69,7 +74,11 @@ spec:
           image: '${weave_npc_image}'
           resources:
             requests:
-              cpu: 10m
+              cpu: 100m
+              memory: 150Mi
+            limits:
+              cpu: 100m
+              memory: 150Mi
           securityContext:
             privileged: true
           volumeMounts:

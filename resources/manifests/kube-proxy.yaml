@@ -17,9 +17,17 @@ spec:
         tier: node
         k8s-app: kube-proxy
     spec:
+      priorityClassName: system-node-critical
       containers:
       - name: kube-proxy
         image: ${hyperkube_image}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 300Mi
+          limits:
+            cpu: 100m
+            memory: 300Mi
         command:
         - ./hyperkube
         - proxy
