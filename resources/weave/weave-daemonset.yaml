@@ -119,4 +119,4 @@ spec:
             path: /run/xtables.lock
             type: FileOrCreate
   updateStrategy:
-    type: RollingUpdate
+    type: OnDelete
