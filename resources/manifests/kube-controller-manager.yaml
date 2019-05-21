@@ -59,6 +59,7 @@ spec:
         - --flex-volume-plugin-dir=/var/lib/kubelet/volumeplugins
         - --root-ca-file=/etc/kubernetes/secrets/ca.crt
         - --service-account-private-key-file=/etc/kubernetes/secrets/service-account.key
+        - --feature-gates=TaintBasedEvictions=true
         livenessProbe:
           httpGet:
             path: /healthz
