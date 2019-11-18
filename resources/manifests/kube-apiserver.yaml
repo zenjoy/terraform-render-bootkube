@@ -39,8 +39,8 @@ spec:
         - --authorization-mode=RBAC
         - --bind-address=0.0.0.0
         - --client-ca-file=/etc/kubernetes/secrets/ca.crt
-        - --cloud-provider=${cloud_provider}
-        - %{ if cloud_config_dir != "" }--cloud-config=${cloud_config_dir}/${cloud_config_file}%{ endif }
+        - --cloud-provider=${cloud_provider}%{ if cloud_config_dir != "" }
+        - --cloud-config=${cloud_config_dir}/${cloud_config_file}%{ endif }
         - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultTolerationSeconds,DefaultStorageClass,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,Priority
         - --etcd-cafile=/etc/kubernetes/secrets/etcd-client-ca.crt
         - --etcd-certfile=/etc/kubernetes/secrets/etcd-client.crt
@@ -56,7 +56,7 @@ spec:
         - --storage-backend=etcd3
         - --tls-cert-file=/etc/kubernetes/secrets/apiserver.crt
         - --tls-private-key-file=/etc/kubernetes/secrets/apiserver.key
-        - --feature-gates=VolumeSnapshotDataSource=true,KubeletPluginsWatcher=true,CSINodeInfo=true,CSIDriverRegistry=true
+        - --feature-gates=VolumeSnapshotDataSource=true,CSINodeInfo=true,CSIDriverRegistry=true
         env:
         - name: POD_IP
           valueFrom:
