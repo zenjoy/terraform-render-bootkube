@@ -50,6 +50,11 @@ resource "template_dir" "manifests" {
     etcd_ca_cert       = base64encode(tls_self_signed_cert.etcd-ca.cert_pem)
     etcd_client_cert   = base64encode(tls_locally_signed_cert.client.cert_pem)
     etcd_client_key    = base64encode(tls_private_key.client.private_key_pem)
+    aggregation_ca_cert = base64encode(
+      var.aggregation_ca_certificate == "" ? join(" ", tls_self_signed_cert.kube-aggregation-ca.*.cert_pem) : var.aggregation_ca_certificate,
+    )
+    aggregation_apiserver_cert = base64encode(tls_locally_signed_cert.aggregation-apiserver.cert_pem)
+    aggregation_apiserver_key = base64encode(tls_private_key.aggregation-apiserver.private_key_pem)
   }
 }
 

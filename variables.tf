@@ -100,6 +100,12 @@ variable "ca_certificate" {
   default = ""
 }
 
+variable "aggregation_ca_certificate" {
+  description = "Existing PEM-encoded Aggregation CA certificate (generated if blank)"
+  type = string
+  default = ""
+}
+
 variable "ca_key_alg" {
   description = "Algorithm used to generate ca_key (required if ca_cert is specified)"
   type = string
