@@ -27,6 +27,10 @@ output "user-kubeconfig" {
   value = data.template_file.user-kubeconfig.rendered
 }
 
+output "user-kubeconfig-file" {
+  value = local_file.user-kubeconfig.filename
+}
+
 # etcd TLS assets
 
 output "etcd_ca_cert" {
