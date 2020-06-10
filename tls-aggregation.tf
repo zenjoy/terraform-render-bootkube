@@ -46,7 +46,7 @@ resource "local_file" "kube-aggregation-ca-key" {
 }
 
 resource "local_file" "kube-aggregation-ca-crt" {
-  content  = join(" ", tls_self_signed_cert.kube-ca.*.cert_pem)
+  content  = join(" ", tls_self_signed_cert.kube-aggregation-ca.*.cert_pem)
   filename = "${var.asset_dir}/tls/aggregation-ca.crt"
 }
 
