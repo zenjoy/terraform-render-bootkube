@@ -40,7 +40,7 @@ resource "template_dir" "manifests" {
     )
     server = format(
       "https://%s:%s",
-      element(var.api_servers, 0),
+      var.api_server_altname,
       var.apiserver_port,
     )
     apiserver_key      = base64encode(tls_private_key.apiserver.private_key_pem)
